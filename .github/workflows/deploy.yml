@@ -21,22 +21,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
-
-      - name: Clean npm cache
-        run: npm cache clean --force
+          node-version: "20"
+          cache: "pnpm"
 
       - name: Install dependencies
-        run: npm ci
-
-      - name: Verify install
-        run: ./node_modules/.bin/next --version
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: ./node_modules/.bin/next build
+        run: pnpm exec next build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
