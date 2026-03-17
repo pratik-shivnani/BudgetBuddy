@@ -25,13 +25,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund
+
+      - name: Verify install
+        run: ./node_modules/.bin/next --version
 
       - name: Build
-        run: npx next build
+        run: ./node_modules/.bin/next build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
